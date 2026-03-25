@@ -1,15 +1,9 @@
-/*notes/ to add
-
-
-*/
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: kindegarten, sans-serif;
 }
-
 body {
   background-image: url('assets/cloudbackground.jpg');
   min-height: 100vh;
@@ -20,7 +14,6 @@ body {
   text-align: left;
   cursor: pointer;
 }
-
 .main-container {
   display: flex;
   width: 100vw;
@@ -29,23 +22,6 @@ body {
   justify-content: center;
   overflow: hidden;
 }
-
-/*.todo-wrapper {/* the whole blue box 
-  background: #87a7d1ea;
-  color: rgb(233, 229, 229);
-  margin: auto;
-  width: 100%;
-  max-width: 600px;
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 40px;
-  box-shadow: 0 0 7px 7px rgba(0, 0, 0, 0.137);
-  
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-
-}*/
 .todo-wrapper {
   background: #81a2dbe0;
   border-radius: 50px 50px 40px 40px;
@@ -55,7 +31,6 @@ body {
   flex-direction: column;
   height: 500px;
 }
-
 #list-container {
   flex: 1;
   overflow-y: auto;
@@ -82,7 +57,6 @@ body {
     margin: 0 auto 20px auto;
     font-family: 'So Cloudy', sans-serif;
 }
-
 .input-wrapper {
     background: rgba(66, 85, 105, 0.2);
     border-radius: 30px;
@@ -96,7 +70,6 @@ body {
 .input-wrapper input::placeholder {
   color: white;
   opacity: 0.7;
-  /* increase font size*/
   font-size: 16px;
 }
 .input-wrapper input {
@@ -132,7 +105,6 @@ ul li {
     user-select: none;
     cursor: pointer;
     position: relative;
-
     color: white;
 }
 .task-item {
