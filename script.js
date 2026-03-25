@@ -1,69 +1,44 @@
 let tasks = [];
 
-// Access input field and Add button
+// DOM elements
 const input = document.querySelector('#todo-input');
 const addBtn = document.querySelector('#submit');
 const listContainer = document.querySelector('#list-container');
 
-
-
-
-
-
-
-
-// Function to create a new task item
+// Create and render a task in the DOM
 function addTask(task) {
 
-  // Create main task item div
+  // Create main task container
   const taskItem = document.createElement('div');
   taskItem.classList.add('task-item');
 
-
-
-
-  // Create input for task text
+  // Create input to display task text
   const taskInput = document.createElement('input');
   taskInput.type = 'text';
   taskInput.value = task.text;
   taskInput.setAttribute('readonly', 'readonly');
   taskInput.classList.add('task-text');
 
-
-
-
-  // Create action items container
+  // Container for action buttons (only 'delete' currently)
   const actionsDiv = document.createElement('div');
   actionsDiv.classList.add('action-items');
 
-
-
-
-  // Create done circle
+  // Create completion toggle (check circle)
   const doneCircle = document.createElement('i');
   doneCircle.classList.add('check-circle');
 
+  // If task is already completed, reflect in UI
+  if (task.completed) {
+    doneCircle.classList.add('done');
+    taskInput.classList.add('done');
+  }
 
-  if(task.completed) {
-  doneCircle.classList.add('done');
-  taskInput.classList.add('done');
-}
-
-
-
-
-
-  // Create delete button
+  // Delete button
   const deleteBtn = document.createElement('i');
   deleteBtn.classList.add('delete');
   deleteBtn.textContent = 'x';
 
-
-
-
-
-  // Append elements
-  //actionsDiv.appendChild(doneCircle);
+  // Build the task structure in the DOM
   actionsDiv.appendChild(deleteBtn);
 
   taskItem.appendChild(doneCircle);
@@ -72,82 +47,70 @@ function addTask(task) {
 
   listContainer.appendChild(taskItem);
 
-
-
-
-
-  // Event listeners
+  // Toggle task comepletion state when clicked
   doneCircle.addEventListener('click', () => {
-
-    doneCircle.classList.toggle('done');       // adds checkmark
-    taskInput.classList.toggle('done');   
+    doneCircle.classList.toggle('done');
+    taskInput.classList.toggle('done');
     
-    task.completed = !task.completed; // toggle completed status
+    // Update underlying data model
+    task.completed = !task.completed;
 
-    localStorage.setItem('tasks', JSON.stringify(tasks)); // update localStorage
+    // Persist updated tasks to local storage
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   });
 
-
-  // Delete task
+  // Delete task from DOM and data model
   deleteBtn.addEventListener('click', () => {
-    
     listContainer.removeChild(taskItem);
 
+    // Remove task from array
     tasks = tasks.filter(t => t !== task);
+
+    // Update local storage after deletion
     localStorage.setItem('tasks', JSON.stringify(tasks));
   });
 }
 
-
-
-
-
-// Event listener for Add button
+// Adds a new task when button is clicked
 addBtn.addEventListener('click', () => {
   const taskText = input.value.trim();
-  if(taskText !== '') {
-    //addTask(taskText);
+  
+   // Prevent empty tasks
+   if(taskText !== '') {
+    const newTask = {
+     text: taskText,
+     completed: false
+   };
 
-   // tasks.push(taskText);
-    //localStorage.setItem('tasks', JSON.stringify(tasks));
+   // Add to task array and persist
+   tasks.push(newTask);
+   localStorage.setItem('tasks', JSON.stringify(tasks));
 
-   const newTask = {
-    text: taskText,
-    completed: false
-};
+   // Render task in UI
+   addTask(newTask);
 
-tasks.push(newTask);
-localStorage.setItem('tasks', JSON.stringify(tasks));
-
-addTask(newTask);
-
-    input.value = '';
+   // Clear inout field
+   input.value = '';
   }
 });
 
-
-
-
-
-
-// Optional: press Enter to add task
+// Add taks with enter key
 input.addEventListener('keypress', (e) => {
   if(e.key === 'Enter') {
     addBtn.click();
   }
 });
 
-
+// Load tasks from localStorage when the page loads
 window.addEventListener('DOMContentLoaded', () => {
+  const storedTasks = localStorage.getItem('tasks');
 
-    const storedTasks = localStorage.getItem('tasks');
+  if(storedTasks) {
+     tasks = JSON.parse(storedTasks);
 
-    if(storedTasks) {
-        tasks = JSON.parse(storedTasks);
-
-        tasks.forEach(task => {
-            addTask(task)
+     // Render each stored task
+     tasks.forEach(task => {
+      addTask(task)
     });
-    
-}
+  }
 });
