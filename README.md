@@ -60,7 +60,7 @@ In the future I'd love to add the following features:
 ---
 
 ## Screenshot of the application
-
+![App Screenshot](assets/Screenshot.png)
 
 ---
 
