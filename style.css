@@ -11,7 +11,7 @@
 }
 
 body {
-  background-image: url('assets/cloudbackground.jpg');
+  background-image: url('cloudbackground.jpg');
   min-height: 100vh;
   background-size: cover;
   background-position: center -50px;
